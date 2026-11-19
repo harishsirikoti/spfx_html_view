@@ -17,6 +17,7 @@
     "@codemirror/state": "^6.7.6",
     "@codemirror/view": "^6.43.15",
     "@fluentui/react": "^8.106.4",
+    "@lucide/icons": "^1.76.0",
     "@microsoft/sp-component-base": "1.24.1",
     "@microsoft/sp-core-library": "1.24.1",
     "@microsoft/sp-lodash-subset": "1.24.1",

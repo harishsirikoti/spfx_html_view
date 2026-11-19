@@ -27,6 +27,7 @@ describe('HtmlDocumentEditor', () => {
     expect(markup).toContain('Cancel');
     expect(markup).toContain('Upload HTML');
     expect(markup).toContain('Download HTML');
+    expect(markup).toContain('Browse Lucide Icons');
   });
 
   it('validates HTML file extensions and size', () => {

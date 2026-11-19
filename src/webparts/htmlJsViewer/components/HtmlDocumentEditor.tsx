@@ -12,6 +12,7 @@ import {
 } from '@codemirror/view';
 import { defaultHighlightStyle, indentOnInput, syntaxHighlighting } from '@codemirror/language';
 import styles from './HtmlJsViewer.module.scss';
+import { getIconWarnings } from './LucideIconRenderer';
 
 export const MAX_HTML_FILE_BYTES = 1024 * 1024;
 export const DEFAULT_DOWNLOAD_FILENAME = 'html-css-template.html';
@@ -89,6 +90,7 @@ export default class HtmlDocumentEditor extends React.Component<IHtmlDocumentEdi
   private _statusIsError: boolean = false;
 
   public componentDidMount(): void {
+    this._warnAboutIcons(this._draft);
     if (this._host.current) {
       this._view = new EditorView({
         state: createHtmlEditorState(this._draft, value => {
@@ -123,6 +125,7 @@ export default class HtmlDocumentEditor extends React.Component<IHtmlDocumentEdi
           />
           <button type="button" onClick={this._openFilePicker}>Upload HTML</button>
           <button type="button" onClick={this._download}>Download HTML</button>
+          <a href="https://lucide.dev/icons/" target="_blank" rel="noopener noreferrer">Browse Lucide Icons</a>
         </div>
         {this._statusMessage && (
           <div className={this._statusIsError ? styles.editorError : styles.editorStatus} role="status" aria-live="polite">
@@ -140,11 +143,15 @@ export default class HtmlDocumentEditor extends React.Component<IHtmlDocumentEdi
   }
 
   private readonly _runPreview = (): void => {
-    this.props.onRunPreview(this._getDocument());
+    const documentText = this._getDocument();
+    this._warnAboutIcons(documentText);
+    this.props.onRunPreview(documentText);
   };
 
   private readonly _save = (): void => {
-    this.props.onSave(this._getDocument());
+    const documentText = this._getDocument();
+    this._warnAboutIcons(documentText);
+    this.props.onSave(documentText);
   };
 
   private readonly _cancel = (): void => {
@@ -166,6 +173,7 @@ export default class HtmlDocumentEditor extends React.Component<IHtmlDocumentEdi
     readHtmlFile(file)
       .then(content => {
         this._replaceDocument(content);
+        this._warnAboutIcons(content);
         this._setStatus(`Imported ${file.name}. Review the draft, then save when ready.`);
       })
       .catch(error => {
@@ -199,5 +207,13 @@ export default class HtmlDocumentEditor extends React.Component<IHtmlDocumentEdi
     this._statusMessage = message;
     this._statusIsError = isError;
     this.forceUpdate();
+  }
+
+  private _warnAboutIcons(documentText: string): void {
+    getIconWarnings(documentText).then(warnings => {
+      if (warnings.length) {
+        this._setStatus(`Warning: ${warnings.join(' ')}`, true);
+      }
+    }).catch(() => undefined);
   }
 }

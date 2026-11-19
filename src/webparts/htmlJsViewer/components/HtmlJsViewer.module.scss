@@ -1,24 +1,9 @@
-.htmlJsViewer {
-  overflow: hidden;
-  padding: 1em;
-  color: "[theme:bodyText, default: #323130]";
-  color: var(--bodyText);
-}
-
-.heading {
-  margin-top: 0;
-}
-
-.securityNote {
-  margin-bottom: 1em;
-}
-
 .previewFrame {
   display: block;
   width: 100%;
-  border: 1px solid #d1d5db;
-  border-radius: 4px;
-  background: #fff;
+  border: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .editorPanel {
@@ -76,25 +61,3 @@
   padding: 4px 10px;
 }
 
-.welcome {
-  text-align: center;
-}
-
-.welcomeImage {
-  width: 100%;
-  max-width: 420px;
-}
-
-.links {
-  a {
-    text-decoration: none;
-    color: "[theme:link, default:#03787c]";
-    color: var(--link); // note: CSS Custom Properties support is limited to modern browsers only
-
-    &:hover {
-      text-decoration: underline;
-      color: "[theme:linkHovered, default: #014446]";
-      color: var(--linkHovered); // note: CSS Custom Properties support is limited to modern browsers only
-    }
-  }
-}
