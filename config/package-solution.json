@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "spfx-html-view-client-side-solution",
+    "id": "748d34bf-fe99-4f98-8189-a1a2a42b0994",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.24.1"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "spfx-html-view description"
+      },
+      "longDescription": {
+        "default": "spfx-html-view description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "spfx-html-view Feature",
+        "description": "The feature that activates elements of the spfx-html-view solution.",
+        "id": "c0753817-7fe2-482f-b2d4-811427a15194",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/spfx-html-view.sppkg"
+  }
+}
