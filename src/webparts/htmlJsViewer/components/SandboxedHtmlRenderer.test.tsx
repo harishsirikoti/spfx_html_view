@@ -8,11 +8,10 @@ import {
 } from './SandboxedHtmlRenderer';
 import { normalizeLucideIconName, resolveLucideIcons } from './LucideIconRenderer';
 
-jest.mock('@lucide/icons/dynamic', () => ({
-  lucideIconNames: ['search', 'calendar-days'],
-  lucideDynamicIconImports: {
-    search: () => Promise.resolve({ default: { node: [['path', { d: 'M3 3h18v18H3z' }]] } }),
-    'calendar-days': () => Promise.resolve({ default: { node: [['rect', { width: '18', height: '18', x: '3', y: '4' }]] } })
+jest.mock('@lucide/icons', () => ({
+  icons: {
+    Search: { name: 'search', node: [['path', { d: 'M3 3h18v18H3z' }]] },
+    CalendarDays: { name: 'calendar-days', node: [['rect', { width: '18', height: '18', x: '3', y: '4' }]] }
   }
 }));
 

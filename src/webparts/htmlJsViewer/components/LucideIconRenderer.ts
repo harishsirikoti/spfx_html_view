@@ -1,3 +1,5 @@
+import { icons as lucideIcons } from '@lucide/icons';
+
 const LUCIDE_BROWSE_URL = 'https://lucide.dev/icons/';
 const DEFAULT_ICON_SIZE = 24;
 const MAX_ICON_SIZE = 256;
@@ -12,7 +14,7 @@ interface ILucideIconData {
 }
 
 interface ILucideRegistryModule {
-  lucideDynamicIconImports: Record<string, () => Promise<{ default: ILucideIconData }> >;
+  iconData: Record<string, ILucideIconData>;
   lucideIconNames: string[];
 }
 
@@ -67,7 +69,17 @@ function renderNode(node: ILucideNode): string {
 
 function loadLucideRegistry(): Promise<ILucideRegistryModule> {
   if (!registryPromise) {
-    registryPromise = import(/* webpackChunkName: "lucide-registry" */ '@lucide/icons/dynamic') as Promise<ILucideRegistryModule>;
+    const iconData: Record<string, ILucideIconData> = {};
+    Object.keys(lucideIcons).forEach(key => {
+      const icon = (lucideIcons as Record<string, ILucideIconData & { name?: string }>)[key];
+      if (icon.name) {
+        iconData[normalizeLucideIconName(icon.name)] = icon;
+      }
+    });
+    registryPromise = Promise.resolve({
+      iconData,
+      lucideIconNames: Object.keys(iconData)
+    });
   }
   return registryPromise;
 }
@@ -115,13 +127,12 @@ export async function resolveLucideIcons(htmlDocument: string): Promise<ILucideI
   for (const element of Array.from(parsedDocument.querySelectorAll('icon'))) {
     const rawName = element.getAttribute('name') || '';
     const name = normalizeLucideIconName(rawName);
-    const loader = registry.lucideDynamicIconImports[name];
-    if (!loader) {
+    const icon = registry.iconData[name];
+    if (!icon) {
       warnings.push(`Unknown Lucide icon "${rawName || '(missing name)'}". Browse ${LUCIDE_BROWSE_URL}`);
       element.remove();
       continue;
     }
-    const icon = (await loader()).default;
     const rendered = createIconMarkup(element, icon, name);
     warnings.push(...rendered.warnings);
     const replacement = parsedDocument.createElement('span');

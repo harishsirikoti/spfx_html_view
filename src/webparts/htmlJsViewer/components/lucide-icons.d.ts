@@ -1,4 +1,6 @@
-declare module '@lucide/icons/dynamic' {
-  export const lucideDynamicIconImports: Record<string, () => Promise<{ default: { node: Array<[string, Record<string, unknown>, Array<unknown>?]> } }>>;
-  export const lucideIconNames: string[];
+declare module '@lucide/icons' {
+  export const icons: Record<string, {
+    name: string;
+    node: Array<[string, Record<string, unknown>, Array<unknown>?]>;
+  }>;
 }
